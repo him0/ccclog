@@ -63,6 +63,8 @@ export async function GET(context: APIContext) {
     throw new Error('site must be configured in astro.config.mjs for RSS feed generation');
   }
 
+  const base = import.meta.env.BASE_URL;
+
   return rss({
     title: 'Claude Code CHANGELOG',
     description: 'Claude Code の変更履歴 / Changelog for Claude Code',
@@ -70,7 +72,7 @@ export async function GET(context: APIContext) {
     items: recentVersions.map((v) => ({
       title: `Claude Code v${v.version}`,
       pubDate: new Date(v.releaseDate + 'T00:00:00+09:00'),
-      link: `${v.year}/#v${v.version}`,
+      link: new URL(`${base}${v.year}/#v${v.version}`, context.site).toString(),
       description: generateDescription(v),
     })),
     customData: '<language>ja</language>',
