@@ -11,6 +11,7 @@
     "retranslate": "tsx scripts/retranslate.ts"
   },
   "dependencies": {
+    "@astrojs/rss": "^4.0.15",
     "astro": "^5.16.16",
     "fuse.js": "^7.1.0"
   },
