@@ -59,10 +59,14 @@ export async function GET(context: APIContext) {
   // 最新50件に制限
   const recentVersions = allVersions.slice(0, 50);
 
+  if (!context.site) {
+    throw new Error('site must be configured in astro.config.mjs for RSS feed generation');
+  }
+
   return rss({
     title: 'Claude Code CHANGELOG',
     description: 'Claude Code の変更履歴 / Changelog for Claude Code',
-    site: context.site!,
+    site: context.site,
     items: recentVersions.map((v) => ({
       title: `Claude Code v${v.version}`,
       pubDate: new Date(v.releaseDate + 'T00:00:00+09:00'),
